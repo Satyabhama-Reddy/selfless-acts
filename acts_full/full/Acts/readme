@@ -1,0 +1,28 @@
+ok ...so...DOCKER VOLUMES
+
+i changed the acts.py to save and open for each request.
+i changed a bit in dockerfile
+
+building:(PWD:Acts)
+sudo docker build . --tag acts:latest
+
+running:
+initially create a container using some random port and instead of running cmd[runner.sh] we can overwrite it with bash
+also the name of the container is alpha
+/home/satya/Desktop/CC/Project/dockertrial/Acts/common acts as a common volume to all containers
+so the command:
+CHANGE THE /home/satya/ PART
+
+sudo docker run -it -p 8000:80 -v /home/satya/Desktop/CC/Project/dockertrial/Acts/common:/common --name alpha acts sh
+
+now everytime we run another container:
+sudo docker run -p 8001:80 --volumes-from alpha acts
+sudo docker run -p 8002:80 --volumes-from alpha acts
+...
+
+This might come in handy:
+to delete all running/stopped containers at once
+sudo docker stop $(sudo docker ps -a -q) ; sudo docker rm $(sudo docker ps -a -q)
+
+to delete all images at once
+sudo docker rmi $(sudo docker images -q)
